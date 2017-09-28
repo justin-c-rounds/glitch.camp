@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>How do I make a web page?</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <h1>How do I make a web page?</h1>
+    <ol>
+      <li>Create a file named <code>index.html</code> using your a text editor of your choice (e.g. <a href="http://atom.io" target="_blank">Atom</a>).</li>
+      <li>Open the <code>index.html</code> in a browser of your choice (e.g. <a href="http://firefox.org" target="_blank">Firefox</a>). Since the file is empty, the page will be completely blank.</li>
+      <li>
+        Back in the editor, start with a <em>document type declaration</em>:
+        <pre>
+          <code>
+            <strong>&lt;!DOCTYPE html&gt;</strong>
+          </code>
+        </pre>
+      </li>
+      <li>
+        Add an <code>html</code> element (don't forget the closing tag!):
+        <pre>
+          <code>
+            &lt;!DOCTYPE html&gt;
+            <strong>&lt;html&gt;
+            &lt;/html&gt;</strong>
+          </code>
+        </pre>
+      </li>
+      <li>
+        Create a <code>head</code> element <em>as a child</em> of the <code>html</code> element:
+        <pre>
+          <code>
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              <strong>&lt;head&gt;
+              &lt;/head&gt;</strong>
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        Create a <code>body</code> element <em>as a sibling</em> of the <code>head</code> element:
+        <pre>
+          <code>
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+              &lt;/head&gt;
+              <strong>&lt;body&gt;
+              &lt;/body&gt;</strong>
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        Create a <code>title</code> element containing the title of your web page as a child of the <code>head</code> element:
+        <pre>
+          <code>
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                <strong>&lt;title&gt;My Web Page&lt;/title&gt;</strong>
+              &lt;/head&gt;
+              &lt;body&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        This text will be displayed at the top of the browser tab/window and used in search results.
+      </li>
+      <li>
+        Now start adding content to the <code>body</code> element. For example, we can add a 1st-order heading to our page to match the <code>title</code> text:
+        <pre>
+          <code>
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;My Web Page&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                <strong>&lt;h1&gt;My Web Page&lt;h1&gt;</strong>
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>Reload the <code>index.html</code> file in the browser. Continue adding more content in the editor and reloading your page in the browser to see the results.</li>
+      <li>When you are satisfied with your web page, upload it to your host (e.g. <a href="http://neocities.org" target="_blank">Neocities</a>).</li>
+    </ol>
+  </body>
+</html>
