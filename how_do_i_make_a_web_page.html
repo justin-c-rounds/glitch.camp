@@ -2,7 +2,9 @@
 <html>
   <head>
     <title>How do I make a web page?</title>
+    <link rel="stylesheet" href="prism.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="prism.js" charset="utf-8"></script>
   </head>
   <body>
     <h1>How do I make a web page?</h1>
@@ -10,17 +12,17 @@
       <li>Create a file named <code>index.html</code> using your a text editor of your choice (e.g. <a href="http://atom.io" target="_blank">Atom</a>).</li>
       <li>Open the <code>index.html</code> in a browser of your choice (e.g. <a href="http://firefox.org" target="_blank">Firefox</a>). Since the file is empty, the page will be completely blank.</li>
       <li>
-        Back in the editor, start with a <em>document type declaration</em>:
-        <pre>
-          <code>
-            <strong>&lt;!DOCTYPE html&gt;</strong>
+        <p>Back in the editor, start with a <em>document type declaration</em>:</p>
+        <pre data-line="1">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
           </code>
         </pre>
       </li>
       <li>
-        Add an <code>html</code> element (don't forget the closing tag!):
-        <pre>
-          <code>
+        <p>Add an <code>html</code> element (don't forget the closing tag!):</p>
+        <pre data-line="2-3">
+          <code class="language-markup">
             &lt;!DOCTYPE html&gt;
             <strong>&lt;html&gt;
             &lt;/html&gt;</strong>
@@ -28,9 +30,9 @@
         </pre>
       </li>
       <li>
-        Create a <code>head</code> element <em>as a child</em> of the <code>html</code> element:
-        <pre>
-          <code>
+        <p>Create a <code>head</code> element <em>as a child</em> of the <code>html</code> element:</p>
+        <pre data-line="3-4">
+          <code class="language-markup">
             &lt;!DOCTYPE html&gt;
             &lt;html&gt;
               <strong>&lt;head&gt;
@@ -40,9 +42,9 @@
         </pre>
       </li>
       <li>
-        Create a <code>body</code> element <em>as a sibling</em> of the <code>head</code> element:
-        <pre>
-          <code>
+        <p>Create a <code>body</code> element <em>as a sibling</em> of the <code>head</code> element:</p>
+        <pre data-line="5-6">
+          <code class="language-markup">
             &lt;!DOCTYPE html&gt;
             &lt;html&gt;
               &lt;head&gt;
@@ -54,9 +56,9 @@
         </pre>
       </li>
       <li>
-        Create a <code>title</code> element containing the title of your web page as a child of the <code>head</code> element:
-        <pre>
-          <code>
+        <p>Create a <code>title</code> element containing the title of your web page as a child of the <code>head</code> element:</p>
+        <pre data-line="4">
+          <code class="language-markup">
             &lt;!DOCTYPE html&gt;
             &lt;html&gt;
               &lt;head&gt;
@@ -67,12 +69,12 @@
             &lt;/html&gt;
           </code>
         </pre>
-        This text will be displayed at the top of the browser tab/window and used in search results.
+        <p>This text will be displayed at the top of the browser tab/window and used in search results.</p>
       </li>
       <li>
-        Now start adding content to the <code>body</code> element. For example, we can add a 1st-order heading to our page to match the <code>title</code> text:
-        <pre>
-          <code>
+        <p>Now start adding content to the <code>body</code> element. For example, we can add a primary heading (<code>h1</code) to our page to match the <code>title</code> text:</p>
+        <pre data-line="7">
+          <code class="language-markup">
             &lt;!DOCTYPE html&gt;
             &lt;html&gt;
               &lt;head&gt;

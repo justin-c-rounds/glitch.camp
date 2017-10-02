@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>How do I create a fluid layout using absolute positioning?</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="prism.js" charset="utf-8"></script>
+    <style>
+      figure {
+        width: 320px;
+        height: 480px;
+        border: 1px solid black;
+        position: relative;
+      }
+      .body {
+        margin: 8px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+      header {
+        background: pink;
+      }
+      nav {
+        background: yellow;
+      }
+      main {
+        background: aqua;
+      }
+      footer {
+        background: lavender;
+      }
+      li[value='3'] .body,
+      li[value='4'] .body,
+      li[value='5'] .body,
+      li[value='6'] .body,
+      li[value='7'] .body {
+        margin: 0;
+      }
+      li[value='4'] footer,
+      li[value='5'] footer,
+      li[value='6'] footer,
+      li[value='7'] footer {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 2rem;
+      }
+      li[value='5'] main,
+      li[value='6'] main,
+      li[value='7'] main {
+        position: absolute;
+        top: 4rem;
+        right: 0;
+        bottom: 2rem;
+        left: 0;
+      }
+      li[value='6'] nav,
+      li[value='7'] nav {
+        position: absolute;
+        top: 2em;
+        right: 0;
+        left: 0;
+        height: 2rem;
+      }
+      li[value='7'] header {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>How do I create a fluid layout using absolute positioning?</h1>
+    <p>We can use absolutely positioned elements to create a fluid layout which can size itself with respect to the browser window. This a fundamental principle of Responsive Design, and it will allow us to create a web page which functions predictably on mobile, tablet, and desktop browsers.</p>
+    <ol>
+      <li>
+        <p>We'll begin by <a href="how_do_i_make_a_web_page.html">creating a basic web page</a> and adding some standard semantic elements to organize our layout:</p>
+        <pre data-line="7-14">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Fluid Layout using Absolute Positioning&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                <strong>&lt;header&gt;
+                &lt;/header&gt;
+                &lt;nav&gt;
+                &lt;/nav&gt;
+                &lt;main&gt;
+                &lt;/main&gt;
+                &lt;footer&gt;
+                &lt;/footer&gt;</strong>
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>The elements we are using are commonly found in web pages:</p>
+        <ul>
+          <li>The <code>header</code> element represents a group of introductory or navigational aids. It may contain some heading elements but also other elements like a logo, a search form, and so on.</li>
+          <li>The <code>nav</code> element represents a section of a page whose purpose is to provide navigation links, either within the current document or to other documents. Common examples of navigation sections are menus, tables of contents, and indexes.</li>
+          <li>The <code>main</code> element represents the main content of the body of a document, portion of a document, or application. The main content area consists of content that is directly related to, or expands upon the central topic of, a document or the central functionality of an application.</li>
+          <li>The <code>footer</code> element represents a footer for its nearest sectioning content or sectioning root element. A footer typically contains information about the author of the section, copyright data or links to related documents.</li>
+        </ul>
+      </li>
+      <li>
+        <p>Right now these are empty, unstyled elements. So we'll add some placeholder text in each, and give them some background colors to make their boxes readily visible:</p>
+        <pre data-line="5-18,21-24">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Fluid Layout using Absolute Positioning&lt;/title&gt;
+                <strong>&lt;style&gt;
+                  header {
+                    background: pink;
+                  }
+                  nav {
+                    background: yellow;
+                  }
+                  main {
+                    background: aqua;
+                  }
+                  footer {
+                    background: lavender;
+                  }
+                &lt;/style&gt;</strong>
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;header&gt;<strong>HEADER</strong>&lt;/header&gt;
+                &lt;nav&gt;<strong>NAV</strong>&lt;/nav&gt;
+                &lt;main&gt;<strong>MAIN</strong>&lt;/main&gt;
+                &lt;footer&gt;<strong>FOOTER</strong>&lt;/footer&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Since we want our layout to work on mobile devices with small screens, we'll design it for a screen with a width of 320 pixels and a height of 480 pixels:</p>
+        <figure>
+          <div class="body">
+            <header>HEADER</header>
+            <nav>NAV</nav>
+            <main>MAIN</main>
+            <footer>FOOTER</footer>
+          </div>
+        </figure>
+        <p>Notice how the elements are positioned just inside the outer edge. This is because the <code>body</code> element has a default margin around it.</p>
+      </li>
+      <li value="3">
+        <p>The first thing we need to do is fix the body so it is the same size as the browser window (the outer black line in the example above):</p>
+        <pre data-line="6-13">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Fluid Layout using Absolute Positioning&lt;/title&gt;
+                &lt;style&gt;
+                  <strong>body {
+                    margin: 0;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                  }</strong>
+                  header {
+                    background: pink;
+                  }
+                  nav {
+                    background: yellow;
+                  }
+                  main {
+                    background: aqua;
+                  }
+                  footer {
+                    background: lavender;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;header&gt;HEADER&lt;/header&gt;
+                &lt;nav&gt;NAV&lt;/nav&gt;
+                &lt;main&gt;MAIN&lt;/main&gt;
+                &lt;footer&gt;FOOTER&lt;/footer&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>This removes the unwanted margin and sets each side of the <code>body</code> element to be flush against the edges of the browser window:</p>
+        <figure>
+          <div class="body">
+            <header>HEADER</header>
+            <nav>NAV</nav>
+            <main>MAIN</main>
+            <footer>FOOTER</footer>
+          </div>
+        </figure>
+        <p>With the <code>body</code> element positioned, we can now absolutely position all of layout elements within the browser window. For demonstration purposes, we'll work bottom-to-top, starting with the <code>footer</code> and finishing with the <code>header</code>.</p>
+      </li>
+      <li value="4">
+        <p>We'll position the <code>footer</code> at the bottom of the browser window:</p>
+        <pre data-line="25-29">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Fluid Layout using Absolute Positioning&lt;/title&gt;
+                &lt;style&gt;
+                  body {
+                    margin: 0;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                  }
+                  header {
+                    background: pink;
+                  }
+                  nav {
+                    background: yellow;
+                  }
+                  main {
+                    background: aqua;
+                  }
+                  footer {
+                    background: lavender;
+                    <strong>position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    height: 2rem;</strong>
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;header&gt;HEADER&lt;/header&gt;
+                &lt;nav&gt;NAV&lt;/nav&gt;
+                &lt;main&gt;MAIN&lt;/main&gt;
+                &lt;footer&gt;FOOTER&lt;/footer&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Notice we are not setting the <code>top</code> property. We are using the <code>height</code> property to determine the size of the footer. We want the footer to stretch horizontally, but not vertically as the browser window changes size. We are also using <code>rem</code> units for our <code>height</code> value so we can accommodate increases in font size.</p>
+        <figure>
+          <div class="body">
+            <header>HEADER</header>
+            <nav>NAV</nav>
+            <main>MAIN</main>
+            <footer>FOOTER</footer>
+          </div>
+        </figure>
+      </li>
+      <li value="5">
+        <p>Now we'll position the <code>main</code> element just above the footer. It will take up most of the page, but we'll leave some space above it for the <code>nav</code> and <code>header</code> elements:</p>
+        <pre data-line="22-27">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Fluid Layout using Absolute Positioning&lt;/title&gt;
+                &lt;style&gt;
+                  body {
+                    margin: 0;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                  }
+                  header {
+                    background: pink;
+                  }
+                  nav {
+                    background: yellow;
+                  }
+                  main {
+                    background: aqua;
+                    <strong>position: absolute;
+                    top: 4rem;
+                    right: 0;
+                    bottom: 2rem;
+                    left: 0;
+                    overflow: auto;</strong>
+                  }
+                  footer {
+                    background: lavender;
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    height: 2rem;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;header&gt;HEADER&lt;/header&gt;
+                &lt;nav&gt;NAV&lt;/nav&gt;
+                &lt;main&gt;MAIN&lt;/main&gt;
+                &lt;footer&gt;FOOTER&lt;/footer&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Notice we are setting the <code>bottom</code> property of the <code>main</code> element equal to the <code>height</code> of the <code>footer</code> element. Also we are not setting the <code>height</code> property because we want this element to stretch both horizontally <em>and</em> vertically.</p>
+        <p>We also are adding <code>overflow: auto</code> since this is where all of the content is going to go, and we don't want the content overflowing the <code>main</code> element and messing up our layout. Setting the <code>overflow</code> to <code>auto</code> will tell the browser to automatically allow the content to scroll within the element if it exceeds the dimensions.</p>
+        <figure>
+          <div class="body">
+            <header>HEADER</header>
+            <nav>NAV</nav>
+            <main>MAIN</main>
+            <footer>FOOTER</footer>
+          </div>
+        </figure>
+      </li>
+      <li value="6">
+        <p>Now we can position the <code>nav</code> above the <code>main</code> element, leaving room above it for the <code>header</code>:</p>
+        <pre data-line="19-23">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Fluid Layout using Absolute Positioning&lt;/title&gt;
+                &lt;style&gt;
+                  body {
+                    margin: 0;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                  }
+                  header {
+                    background: pink;
+                  }
+                  nav {
+                    background: yellow;
+                    <strong>position: absolute;
+                    top: 2rem;
+                    right: 0;
+                    left: 0;
+                    height: 2rem;</strong>
+                  }
+                  main {
+                    background: aqua;
+                    position: absolute;
+                    top: 4rem;
+                    right: 0;
+                    bottom: 2rem;
+                    left: 0;
+                  }
+                  footer {
+                    background: lavender;
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    height: 2rem;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;header&gt;HEADER&lt;/header&gt;
+                &lt;nav&gt;NAV&lt;/nav&gt;
+                &lt;main&gt;MAIN&lt;/main&gt;
+                &lt;footer&gt;FOOTER&lt;/footer&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Just as we did with the <code>footer</code>, we set the <code>height</code> property on the <code>nav</code>, so it will only stretch horizontally:</p>
+        <figure>
+          <div class="body">
+            <header>HEADER</header>
+            <nav>NAV</nav>
+            <main>MAIN</main>
+            <footer>FOOTER</footer>
+          </div>
+        </figure>
+      </li>
+      <li value="7">
+        <p>Finally we can position the <code>header</code> at the very top of the browser:</p>
+        <pre data-line="16-20">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Fluid Layout using Absolute Positioning&lt;/title&gt;
+                &lt;style&gt;
+                  body {
+                    margin: 0;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                  }
+                  header {
+                    background: pink;
+                    <strong>position: absolute;
+                    top: 0;
+                    right: 0;
+                    left: 0;
+                    height: 2rem;</strong>
+                  }
+                  nav {
+                    background: yellow;
+                    position: absolute;
+                    top: 2rem;
+                    right: 0;
+                    left: 0;
+                    height: 2rem;
+                  }
+                  main {
+                    background: aqua;
+                    position: absolute;
+                    top: 4rem;
+                    right: 0;
+                    bottom: 2rem;
+                    left: 0;</strong>
+                  }
+                  footer {
+                    background: lavender;
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    height: 2rem;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;header&gt;HEADER&lt;/header&gt;
+                &lt;nav&gt;NAV&lt;/nav&gt;
+                &lt;main&gt;MAIN&lt;/main&gt;
+                &lt;footer&gt;FOOTER&lt;/footer&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Now we have a fluid layout that will stretch to accommodate any screen width:</p>
+        <figure>
+          <div class="body">
+            <header>HEADER</header>
+            <nav>NAV</nav>
+            <main>MAIN</main>
+            <footer>FOOTER</footer>
+          </div>
+        </figure>
+      </li>
+    </ol>
+  </body>
+</html>

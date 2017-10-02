@@ -1,6 +1,23 @@
 body {
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
 }
-img {
-  display: block;
+
+li {
+  margin-bottom: 2em;
+}
+
+li li {
+  margin-bottom: 1em;
+}
+
+code {
+  font-size: 150%;
+}
+
+pre code {
+  font-size: 100%;
+}
+
+.line-highlight::before, .line-highlight[data-end]::after {
+  display: none;
 }

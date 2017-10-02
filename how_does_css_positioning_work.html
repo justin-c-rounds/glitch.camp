@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>How does CSS positioning work?</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="prism.js" charset="utf-8"></script>
+    <style>
+      figure div {
+        width: 200px;
+        height: 200px;
+        background: grey;
+        text-align: center;
+        font-size: 200px;
+      }
+      .first {
+        background: red;
+      }
+      .second {
+        background: green;
+      }
+      .third {
+        background: blue;
+      }
+      li[value='6'] .second {
+        position: relative;
+        top: 50px;
+        left: 50px;
+      }
+      .outer,
+      .inner {
+        width: auto;
+        height: auto;
+        background: transparent;
+      }
+      .outer {
+        border: 5px solid black;
+        height: 400px;
+        width: 400px;
+        position: relative;
+      }
+      .inner {
+        border: 5px dashed black;
+        margin: 20px;
+        padding: 10px;
+      }
+
+      .square {
+        opacity: 0.5;
+      }
+
+      li[value='4'] .square,
+      li[value='5'] .square,
+      li[value='6'] .square,
+      li[value='7'] .square {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      li[value='5'] .inner {
+        position: relative;
+      }
+
+      li[value='6'] .inner {
+        position: absolute;
+      }
+
+      li[value='7'] .inner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>How does CSS positioning work?</h1>
+    <h2>Relative Positioning</h2>
+    <p><em>Relative positioning</em> adjusts the position of an element relative to its default position in the document flow.</p>
+    <ol>
+      <li>
+        <p><a href="how_do_i_make_a_web_page.html">Create a web page</a> and put three <code>div</code> elements in the <code>body</code> element:</p>
+        <pre data-line="7-9">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Relative positioning in CSS&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                <strong>&lt;div&gt;1&lt;/div&gt;
+                &lt;div&gt;2&lt;/div&gt;
+                &lt;div&gt;3&lt;/div&gt;</strong>
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Although <code>div</code> elements are semantically meaningless and therefore should be avoided, we're just using them here to create some generic, block-level elements to apply CSS to for demonstration purposes. We would generally apply positioning to semantic elements to control their layout on the page.</p>
+      </li>
+      <li>
+        <p>Add a <code>style</code> element to the page to contain some CSS:</p>
+        <pre data-line="5-6">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Relative positioning in CSS&lt;/title&gt;
+                <strong>&lt;style&gt;
+                &lt;/style&gt;</strong>
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div&gt;1&lt;/div&gt;
+                &lt;div&gt;2&lt;/div&gt;
+                &lt;div&gt;3&lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Using a <code>div</code> <em><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors" target="_blank">type selector</a></em>, we can apply CSS to all the <code>div</code> elements on the page:</p>
+        <pre data-line="6-12">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Relative positioning in CSS&lt;/title&gt;
+                &lt;style&gt;
+                  <strong>div {
+                    width: 200px;
+                    height: 200px;
+                    background: grey;
+                    text-align: center;
+                    font-size: 200px;
+                  }</strong>
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div&gt;1&lt;/div&gt;
+                &lt;div&gt;2&lt;/div&gt;
+                &lt;div&gt;3&lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>This will give us a stack of three 200-pixel squares:</p>
+        <figure>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+        </figure>
+      </li>
+      <li>
+        <p>In order to apply specific CSS to each <code>div</code> individually, we can give each one a unique <em>class</em>:</p>
+        <pre data-line="16-18">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Relative positioning in CSS&lt;/title&gt;
+                &lt;style&gt;
+                  div {
+                    width: 200px;
+                    height: 200px;
+                    background: grey;
+                    text-align: center;
+                    font-size: 200px;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div <strong>class="first"</strong>&gt;1&lt;/div&gt;
+                &lt;div <strong>class="second"</strong>&gt;2&lt;/div&gt;
+                &lt;div <strong>class="third"</strong>&gt;3&lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Now we can apply different CSS to each square using <em><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors" target="_blank"></a>class selectors</em>:</p>
+        <pre data-line="13-21">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Relative positioning in CSS&lt;/title&gt;
+                &lt;style&gt;
+                  div {
+                    width: 200px;
+                    height: 200px;
+                    background: grey;
+                    text-align: center;
+                    font-size: 200px;
+                  }
+                  <strong>.first {
+                    background: red;
+                  }
+                  .second {
+                    background: green;
+                  }
+                  .third {
+                    background: blue;
+                  }</strong>
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div class="first"&gt;1&lt;/div&gt;
+                &lt;div class="second"&gt;2&lt;/div&gt;
+                &lt;div class="third"&gt;3&lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Which results in each square having a different color:</p>
+        <figure>
+          <div class="first">1</div>
+          <div class="second">2</div>
+          <div class="third">3</div>
+        </figure>
+      </li>
+      <li value="6">
+        <p>Now let's adjust the position of the second square using <em>relative positioning</em>:</p>
+        <pre data-line="18-20">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Relative positioning in CSS&lt;/title&gt;
+                &lt;style&gt;
+                  div {
+                    width: 200px;
+                    height: 200px;
+                    background: grey;
+                    text-align: center;
+                    font-size: 200px;
+                  }
+                  .first {
+                    background: red;
+                  }
+                  .second {
+                    background: green;
+                    <strong>position: relative;
+                    top: 50px;
+                    left: 50px;</strong>
+                  }
+                  .third {
+                    background: blue;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div class="first"&gt;1&lt;/div&gt;
+                &lt;div class="second"&gt;2&lt;/div&gt;
+                &lt;div class="third"&gt;3&lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>This shifts the position of the second square 50 pixels from the top and 50 pixels from the left of its original location in the document flow:</p>
+        <figure>
+          <div class="first">1</div>
+          <div class="second">2</div>
+          <div class="third">3</div>
+        </figure>
+        <p>Two important things to notice here are:</p>
+        <ul>
+          <li>The positions of the other squares have not changed.</li>
+          <li>The second square is in front of the third square.</li>
+        </ul>
+        <p>Here's exactly what the browser is doing:</p>
+        <ul>
+          <li>First the browser calculates the positions of all three squares in the order they appear in the HTML.</li>
+          <li>Then the browser sees that the second square is <code>position: relative</code> and recalculates its position again based on the <code>top</code> and <code>left</code> <em>CSS properties</em>. It's as though it is painting the second square twice. This why the positions of the other squares do not change, and the second square appears in front of the third square.</li>
+        </ul>
+        <p>We can use any of the positioning properties to adjust the position of an element: <code>top</code>, <code>right</code>, <code>bottom</code>, or <code>left</code>. In relative positioning, only one or two of these properties are used.</p>
+      </li>
+    </ol>
+    <h2>Absolute Positioning</h2>
+    <p><em>Absolute positioning</em> positions an element in relationship to its innermost positioned containing element (or the browser window if no containers are positioned). Let's create a simple web page to demonstrate how this works.</p>
+    <ol>
+      <li>
+        <p>Just like we did in the <em>relative positioning</em> example above (which you should understand thoroughly before proceeding), we will create a web page with three <code>div</code> elements on it, except this time we will nest the divs one inside the other:</p>
+        <pre data-line="7-11">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Absolute positioning in CSS&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                <strong>&lt;div&gt;
+                  &lt;div&gt;
+                    &lt;div&gt;&lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;</strong>
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Many HTML elements are nested in this way, creating <em>parent-child</em> relationships in addition to <em>sibling</em> relationships between elements with the same parent. This creates a hierarchical, tree-like structure with the <code>html</code> element at the root.</p>
+      </li>
+      <li>
+        <p>We will assign a class to each <code>div</code> so we can apply CSS:</p>
+        <pre data-line="7-11">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Absolute positioning in CSS&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div <strong>class="outer"</strong>&gt;
+                  &lt;div <strong>class="inner"</strong>&gt;
+                    &lt;div <strong>class="square"</strong>&gt;&lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Now we can add CSS to make the <code>div</code> elements look like a box inside two other boxes:</p>
+        <pre data-line="5-22">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Absolute positioning in CSS&lt;/title&gt;
+                <strong>&lt;style&gt;
+                  .outer {
+                    border: 5px solid black;
+                    height: 400px;
+                    width: 400px;
+                  }
+                  .inner {
+                    border: 5px dashed black;
+                    margin: 20px;
+                    padding: 10px;
+                  }
+                  .square {
+                    width: 200px;
+                    height: 200px;
+                    background: grey;
+                    opacity: 0.5;
+                  }
+                &lt;/style&gt;</strong>
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div class="outer"&gt;
+                  &lt;div class="inner"&gt;
+                    &lt;div class="box"&gt;&lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>This gives us an 400-pixel square outer box, an unsized inner box with a 20-pixel margin and 20 pixels of padding, and a partially-transparent 200-pixel grey square in the middle:</p>
+        <figure>
+          <div class="outer">
+            <div class="inner">
+              <div class="square"></div>
+            </div>
+          </div>
+        </figure>
+      </li>
+      <li value="4">
+        <p>Now let's set the <code>position</code> of the outer box to <code>relative</code> and set the <code>position</code> of the grey square to <code>absolute</code>:</p>
+        <pre data-line="10,22-24">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Absolute positioning in CSS&lt;/title&gt;
+                &lt;style&gt;
+                  .outer {
+                    border: 5px solid black;
+                    height: 400px;
+                    width: 400px;
+                    <strong>position: relative;</strong>
+                  }
+                  .inner {
+                    border: 5px dashed black;
+                    margin: 20px;
+                    padding: 10px;
+                  }
+                  .square {
+                    width: 200px;
+                    height: 200px;
+                    background: grey;
+                    opacity: 0.5;
+                    <strong>position: absolute;
+                    top: 0;
+                    left: 0;</strong>
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div class="outer"&gt;
+                  &lt;div class="inner"&gt;
+                    &lt;div class="square"&gt;&lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>This results in the grey square being placed in the upper left corner of the outer box:</p>
+        <figure>
+          <div class="outer">
+            <div class="inner">
+              <div class="square"></div>
+            </div>
+          </div>
+        </figure>
+        <p>The <em>top</em> side of the grey square is positioned zero units (as defined by the <code>top</code> CSS property) away from the <em>top</em> side of the outer box, and the <em>left</em> side is positioned zero units (as defined by the <code>left</code> CSS property) away from the <em>left</em> side.</p>
+        <p>Notice how the inner box collapses in on itself, as though it contains no content, <em>even though the grey square is a child of the inner box</em>. This is because absolute positioning removes an element from the natural document flow of the browser.</p>
+        <p>Notice also we are not setting any values for the <code>top</code>, <code>right</code>, <code>bottom</code>, or <code>left</code> CSS properties of the outer box. We aren't using relative positioning to adjust the outer box, we are simply using it to establish a reference for any absolutely positioned <em>descendents</em>.</p>
+      </li>
+      <li value="5">
+        <p>Let's change the reference to the inner box, by setting its <code>position</code> to <code>relative</code> instead of the outer box:</p>
+        <pre data-line="10,16">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Absolute positioning in CSS&lt;/title&gt;
+                &lt;style&gt;
+                  .outer {
+                    border: 5px solid black;
+                    height: 400px;
+                    width: 400px;
+                    <strong>/* position: relative; */</strong>
+                  }
+                  .inner {
+                    border: 5px dashed black;
+                    margin: 20px;
+                    padding: 10px;
+                    <strong>position: relative;</strong>
+                  }
+                  .square {
+                    width: 200px;
+                    height: 200px;
+                    background: grey;
+                    opacity: 0.5;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div class="outer"&gt;
+                  &lt;div class="inner"&gt;
+                    &lt;div class="square"&gt;&lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>We'll just comment out the <code>position</code> of the outer box for now.</p>
+        <p>With the inner box positioned, the grey square now uses the inner box as a reference for absolute positioning:</p>
+        <figure>
+          <div class="outer">
+            <div class="inner">
+              <div class="square"></div>
+            </div>
+          </div>
+        </figure>
+        <p>Since absolute positioning takes the grey square out of the document flow, the inner box still collapses, but you can see how the top and left sides of the grey square are positioned in relationship to the top and left sides of the inner box.</p>
+        <p>Notice also how the padding on the inner box does not affect the position of the grey square.</p>
+      </li>
+      <li value="6">
+        <p>Let's say we want the grey square to be positioned inside the inner box, but we want the inner box to sized in relationship to the outer box, while retaining the same 20-pixel margin. We can use another aspect of absolute positioning to achieve this.</p>
+        <p>First we need to re-enable the relative positioning of the outer box, and change the inner box to use absolute positioning:</p>
+        <pre data-line="10,16">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Absolute positioning in CSS&lt;/title&gt;
+                &lt;style&gt;
+                  .outer {
+                    border: 5px solid black;
+                    height: 400px;
+                    width: 400px;
+                    <strong>position: relative;</strong>
+                  }
+                  .inner {
+                    border: 5px dashed black;
+                    margin: 20px;
+                    padding: 10px;
+                    position: <strong>absolute</strong>;
+                  }
+                  .square {
+                    width: 200px;
+                    height: 200px;
+                    background: grey;
+                    opacity: 0.5;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div class="outer"&gt;
+                  &lt;div class="inner"&gt;
+                    &lt;div class="square"&gt;&lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Which results in the inner box collapsing <em>completely</em>:</p>
+        <figure>
+          <div class="outer">
+            <div class="inner">
+              <div class="square"></div>
+            </div>
+          </div>
+        </figure>
+        <p>Again, since absolutely positioning the inner box takes it out of the document flow, it has no reference to establish its width (as with any <em>block-level</em> element, it would be as wide as it could without overflowing its parent element).</p>
+      </li>
+      <li value="7">
+        <p>Absolute positioning allows us to position each side of an element with respect to the innermost positioned container. Since the outer box is positioned relative, if we set the <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code> values of the inner box, we can make it fit perfectly within the outer box:</p>
+        <pre data-line="17-20">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Absolute positioning in CSS&lt;/title&gt;
+                &lt;style&gt;
+                  .outer {
+                    border: 5px solid black;
+                    height: 400px;
+                    width: 400px;
+                    position: relative;
+                  }
+                  .inner {
+                    border: 5px dashed black;
+                    margin: 20px;
+                    padding: 10px;
+                    position: absolute;
+                    <strong>top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;</strong>
+                  }
+                  .square {
+                    width: 200px;
+                    height: 200px;
+                    background: grey;
+                    opacity: 0.5;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;div class="outer"&gt;
+                  &lt;div class="inner"&gt;
+                    &lt;div class="square"&gt;&lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>This gives us fine-grained control over containing elements like the inner box:</p>
+        <figure>
+          <div class="outer">
+            <div class="inner">
+              <div class="square"></div>
+            </div>
+          </div>
+        </figure>
+        <p>Notice how the <code>margin</code> still applies, and we accomplished this without setting the width or height of the inner box. The outer box will determine the size of the inner box. This principle, where inner containers can be flexibly positioned within an outer container, is the key to understanding <a href="how_do_i_create_a_fluid_layout_using_absolute_positioning.html">how to create a fluid layout using absolute positioning</a>.</p>
+      </li>
+    </ol>
+  </body>
+</html>
