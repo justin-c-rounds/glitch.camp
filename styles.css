@@ -12,12 +12,18 @@ li li {
 
 code {
   font-size: 150%;
+  font-weight: bold;
 }
 
 pre code {
   font-size: 100%;
+  font-weight: normal;
 }
 
 .line-highlight::before, .line-highlight[data-end]::after {
   display: none;
+}
+
+img {
+  border: 0.1em solid black;
 }

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>How do I use custom web fonts?</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="prism.js" charset="utf-8"></script>
+    <script src="https://use.typekit.net/sdc3zbv.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <style>
+      figure {
+        font-family: serif;
+        border: 0.1em solid black;
+        padding: 8px;
+      }
+      figure p.custom {
+        font-family: 'Roboto', sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>How do I use custom web fonts?</h1>
+    <p>Custom web fonts allow us to have the browser download and use any fonts we want to use on our web pages, instead of having to rely exclusively on fonts installed on the user's device.</p>
+    <p>Using web fonts gives us the flexibility to fine-tune our typography, <em>however it comes at a cost</em>. Since a web font has to be downloaded to the user's device, adding a web font will increase the overall page weight and increase the number of requests the browser has to make to fully load the web page. This isn't much of a problem on devices with good network connections, but for devices on poor connections (like cell phone networks) this can make the web pages take too long to load. In addition, users who pay for data will be forced to use more bandwidth than necessary just to read the text on your page.</p>
+    <p>There are a few services which make it simple to use web fonts, and we'll explore each in detail.</p>
+    <h2>Google Fonts</h2>
+    <p>Google provides a <a href="https://fonts.google.com/" target="_blank">web font service</a> which makes it simple to use a custom font. Let's <a href="how_do_i_make_a_web_page.html">create a web page</a> and apply a custom font to it using Google Fonts.</p>
+    <ol>
+      <li>
+        <p>We'll start with <a href="how_do_i_make_a_web_page.html">a basic web page</a>:</p>
+        <pre>
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Custom Web Fonts&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Custom Web Fonts&lt;h1&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Let's add two <code>p</code> elements, one for the default font and one for the custom font:</p>
+        <pre data-line="8-9">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Custom Web Fonts&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Custom Web Fonts&lt;h1&gt;
+                <strong>&lt;p&gt;The quick brown fox jumped over the lazy dog.&lt;/p&gt;
+                &lt;p&gt;The quick brown fox jumped over the lazy dog.&lt;/p&gt;</strong>
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Go to <a href="https://fonts.google.com/" target="_blank">Google Fonts</a>, select a font, copy/paste the <code>link</code> tag provided into the <code>head</code> of your web page, and add the provided CSS to a <code>custom</code> class selector in a <code>style</code> element or external style sheet:</p>
+        <img src="googlefonts1.gif">
+        <pre data-line="5-10">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Custom Web Fonts&lt;/title&gt;
+                <strong>&lt;link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"&gt;
+                &lt;style&gt;
+                  .custom {
+                    font-family: 'Roboto', sans-serif;
+                  }
+                &lt;/style&gt;</strong>
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Custom Web Fonts&lt;h1&gt;
+                &lt;p&gt;The quick brown fox jumped over the lazy dog.&lt;/p&gt;
+                &lt;p&gt;The quick brown fox jumped over the lazy dog.&lt;/p&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Now we add the <code>custom</code> class to the second <code>p</code> element:</p>
+        <pre data-line="15">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Custom Web Fonts&lt;/title&gt;
+                &lt;link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"&gt;
+                &lt;style&gt;
+                  .custom {
+                    font-family: 'Roboto', sans-serif;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Custom Web Fonts&lt;h1&gt;
+                &lt;p&gt;The quick brown fox jumped over the lazy dog.&lt;/p&gt;
+                &lt;p <strong>class="custom"</strong>&gt;The quick brown fox jumped over the lazy dog.&lt;/p&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Which applies the web font to the second paragraph:</p>
+        <figure>
+          <h1>Custom Web Fonts</h1>
+          <p>The quick brown fox jumped over the lazy dog.</p>
+          <p class="custom">The quick brown fox jumped over the lazy dog.</p>
+        </figure>
+      </li>
+    </ol>
+    <p>For more information, check out <a href="https://developers.google.com/fonts/docs/getting_started" target="_blank">Get Started with the Google Fonts API</a>.</p>
+  </body>
+</html>
