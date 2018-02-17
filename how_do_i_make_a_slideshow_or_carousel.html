@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>How do I make a slideshow or carousel?</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="prism.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <h1>How do I make a slideshow or carousel?</h1>
+    <p><strong>Warning:</strong> animating/transitioning images on a web page <a href="https://www.usability.gov/get-involved/blog/2013/04/image-carousels.html" target="_blank">can be problematic</a>. <em>Be absolutely sure this is the right approach for your use-case and not just "eye-candy".</em></p>
+    <p>Generally speaking, automatically rotating slideshows (also known as "image carousels") are poor ways of communicating static visual information. Unlike a set of images, they don't let the user have control of what they are seeing. In addition, they impede contextual connections between images, which help reinforce the presented information.</p>
+    <p>Let's look at some approaches to do this based on the goals for your project.</p>
+    <h2>Slideshow as Special Effect</h2>
+    <p>This is the way to do this if we don't really care whether people look at the images or not, like a background image. In fact, we'll use background images in CSS to implement it.</p>
+    <ol>
+      <li>
+        <p>We'll start with <a href="how_do_i_make_a_web_page.html">a simple web page</a> to prototype the slideshow:</p>
+        <pre>
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Simple Slideshow&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Simple Slideshow&lt;h1&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Then we'll add a <code>div</code> element to contain our slideshow:</p>
+        <pre>
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Simple Slideshow&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Simple Slideshow&lt;h1&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+    </ol>
+  </body>
+</html>

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>How do I make a lightbox effect?</title>
+    <link rel="stylesheet" href="../prism.css">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../prism.js" charset="utf-8"></script>
+    <style>
+      figure {
+        font-family: serif;
+        border: 0.1em solid black;
+        position: relative;
+        max-width: 640px;
+      }
+      figure main {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 8px;
+      }
+      figure .shim {
+        margin-top: 75%;
+      }
+      figure img {
+        border: none;
+      }
+      .thumbnail {
+        width: 10rem;
+        margin: 1rem;
+      }
+      .lightbox {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+      }
+      .lightbox[data-image='dog'] {
+        background-image: url('dog.jpg');
+      }
+      .lightbox[data-image='cat'] {
+        background-image: url('cat.jpg');
+      }
+    </style>
+  </head>
+  <body>
+    <h1>How do I make a lightbox effect?</h1>
+    <ol>
+      <li>
+        <p>We'll start with <a href="../how_do_i_make_a_web_page.html">a basic web page</a>:</p>
+        <pre data-line="1-9">
+          <code class="language-markup">
+            <strong>&lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;</strong>
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Then we'll add a couple of images we can apply the lightbox effect to. We'll give them a <code>thumbnail</code> class to apply CSS and make them easy to reference via JavaScript.</p>
+        <pre data-line="8-9">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                <strong>&lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;</strong>
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>We'll add some CSS to control the display size of the images.</p>
+        <pre data-line="5-10">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                <strong>&lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                &lt;/style&gt;</strong>
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Now we have our thumbnails:</p>
+        <figure>
+          <main>
+            <h1>Lightbox Effect</h1>
+            <img class="thumbnail" src="dog.jpg">
+            <img class="thumbnail" src="cat.jpg">
+          </main>
+          <div class="shim"></div>
+        </figure>
+      </li>
+      <li>
+        <p>The lightbox effect will require an element to present the full-size image, so we'll add an empty <code>div</code> for this. We'll give it an <code>id</code> attribute so we can refer to it in JavaScript, and assign it a <code>lightbox</code> class for styling.</p>
+        <pre data-line="16">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;
+                <strong>&lt;div id="lightbox" class="lightbox"&gt;&lt;/div&gt;</strong>
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>We'll style the lightbox element so it will cover the entire window and be slightly transparent.</p>
+        <pre data-line="10-17">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                  <strong>.lightbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.9);
+                  }</strong>
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;
+                &lt;div id="lightbox" class="lightbox"&gt;&lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Which gives us an overlay where we can present the image:</p>
+        <figure>
+          <main>
+            <h1>Lightbox Effect</h1>
+            <img class="thumbnail" src="dog.jpg">
+            <img class="thumbnail" src="cat.jpg">
+            <div class="lightbox"></div>
+          </main>
+          <div class="shim"></div>
+        </figure>
+      </li>
+      <li>
+        <p>The method we will use for displaying the lightbox image will be to use a <code>background-image</code> in CSS. We'll configure which image gets displayed by using a <code>data-image</code> attribute on the lightbox element, and use an attribute selector in CSS. We'll also need to add some CSS to control how the background image is rendered.</p>
+        <pre data-line="17-19,21-23,30">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                  .lightbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    <strong>background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;</strong>
+                  }
+                  <strong>.lightbox[data-image='dog'] {
+                    background-image: url('dog.jpg');
+                  }</strong>
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;
+                &lt;div id="lightbox" class="lightbox" <strong>data-image="dog"</strong>&gt;&lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <p>Which gives us a full-screen display of the dog image:</p>
+        <figure>
+          <main>
+            <h1>Lightbox Effect</h1>
+            <img class="thumbnail" src="dog.jpg">
+            <img class="thumbnail" src="cat.jpg">
+            <div class="lightbox" data-image="dog"></div>
+          </main>
+          <div class="shim"></div>
+        </figure>
+      </li>
+      <li>
+        <p>Now let's do the same for the cat image.</p>
+        <pre data-line="24-26,33">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                  .lightbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                  }
+                  .lightbox[data-image='dog'] {
+                    background-image: url('dog.jpg');
+                  }
+                  <strong>.lightbox[data-image='cat'] {
+                    background-image: url('cat.jpg');
+                  }</strong>
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;
+                &lt;div id="lightbox" class="lightbox" data-image=<strong>"cat"</strong>&gt;&lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+        <figure>
+          <main>
+            <h1>Lightbox Effect</h1>
+            <img class="thumbnail" src="dog.jpg">
+            <img class="thumbnail" src="cat.jpg">
+            <div class="lightbox" data-image="cat"></div>
+          </main>
+          <div class="shim"></div>
+        </figure>
+      </li>
+      <li>
+        <p>Of course we don't want the lightbox to be visible by default, so we will make the default state of the <code>data-image</code> attribute to be empty, then add some CSS to hide the lightbox accordingly.</p>
+        <pre data-line="21-23,36">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                  .lightbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                  }
+                  <strong>.lightbox[data-image=''] {
+                    display: none;
+                  }</strong>
+                  .lightbox[data-image='dog'] {
+                    background-image: url('dog.jpg');
+                  }
+                  .lightbox[data-image='cat'] {
+                    background-image: url('cat.jpg');
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;
+                &lt;div id="lightbox" class="lightbox" data-image=<strong>""</strong>&gt;&lt;/div&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Now we need to use JavaScript to set the <code>data-image</code> attribute of the lightbox dynamically when the thumbnail gets clicked. Let's create a <code>script</code> element to contain our JavaScript, just before the closing <code>body</code> tag.</p>
+        <pre data-line="37-38">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                  .lightbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                  }
+                  .lightbox[data-image=''] {
+                    display: none;
+                  }
+                  .lightbox[data-image='dog'] {
+                    background-image: url('dog.jpg');
+                  }
+                  .lightbox[data-image='cat'] {
+                    background-image: url('cat.jpg');
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;
+                &lt;div id="lightbox" class="lightbox" data-image=""&gt;&lt;/div&gt;
+                <strong>&lt;script&gt;
+                &lt;/script&gt;</strong>
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>The first thing we need to do is create an <a href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE" target="_blank">IIFE</a> (Immediately Invoked Function Expression) to isolate our JavaScript from the global namespace.</p>
+        <pre data-line="38-40">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                  .lightbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                  }
+                  .lightbox[data-image=''] {
+                    display: none;
+                  }
+                  .lightbox[data-image='dog'] {
+                    background-image: url('dog.jpg');
+                  }
+                  .lightbox[data-image='cat'] {
+                    background-image: url('cat.jpg');
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;
+                &lt;div id="lightbox" class="lightbox" data-image=""&gt;&lt;/div&gt;
+                &lt;script&gt;
+                  <strong>(function () {
+                    // Lightbox Code
+                  })();</strong>
+                &lt;/script&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Inside the IIFE we will assign the lightbox element to a variable using <code>getElementById</code>.</p>
+        <pre data-line="40">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                  .lightbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                  }
+                  .lightbox[data-image=''] {
+                    display: none;
+                  }
+                  .lightbox[data-image='dog'] {
+                    background-image: url('dog.jpg');
+                  }
+                  .lightbox[data-image='cat'] {
+                    background-image: url('cat.jpg');
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;
+                &lt;div id="lightbox" class="lightbox" data-image=""&gt;&lt;/div&gt;
+                &lt;script&gt;
+                  (function () {
+                    // Lightbox Code
+                    <strong>var lightbox = document.getElementById('lightbox');</strong>
+                  })();
+                &lt;/script&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Then we need to tell the browser to listen for <code>click</code> events on the thumbnails. We'll first retrieve an array of the thumbnails using <code>querySelectorAll</code>, which will find all the elements based on the CSS selector we pass in as an argument. Then we will use <code>addEventListener</code> to bind to the <code>click</code> event.</p>
+        <pre data-line="41-45">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                  .lightbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                  }
+                  .lightbox[data-image=''] {
+                    display: none;
+                  }
+                  .lightbox[data-image='dog'] {
+                    background-image: url('dog.jpg');
+                  }
+                  .lightbox[data-image='cat'] {
+                    background-image: url('cat.jpg');
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg"&gt;
+                &lt;img class="thumbnail" src="cat.jpg"&gt;
+                &lt;div id="lightbox" class="lightbox" data-image=""&gt;&lt;/div&gt;
+                &lt;script&gt;
+                  (function () {
+                    // Lightbox Code
+                    var lightbox = document.getElementById('lightbox');
+                    <strong>document.querySelectorAll('.thumbnail').forEach(function (thumbnail) {
+                      thumbnail.addEventListener('click', function (e) {
+                        // Set the lightbox data-image attribute when the thumbnail is clicked
+                      });
+                    });</strong>
+                  })();
+                &lt;/script&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Now we have another problem to solve: how do we know what value to assign to the <code>data-image</code> attribute? Let's give the thumbnails their own <code>data-image</code> attributes and use their values to set the value of the lightbox's <code>data-image</code> attribute.</p>
+        <pre data-line="34-35,44">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                  .lightbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                  }
+                  .lightbox[data-image=''] {
+                    display: none;
+                  }
+                  .lightbox[data-image='dog'] {
+                    background-image: url('dog.jpg');
+                  }
+                  .lightbox[data-image='cat'] {
+                    background-image: url('cat.jpg');
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg" <strong>data-image="dog"</strong>&gt;
+                &lt;img class="thumbnail" src="cat.jpg" <strong>data-image="cat"</strong>&gt;
+                &lt;div id="lightbox" class="lightbox" data-image=""&gt;&lt;/div&gt;
+                &lt;script&gt;
+                  (function () {
+                    // Lightbox Code
+                    var lightbox = document.getElementById('lightbox');
+                    document.querySelectorAll('.thumbnail').forEach(function (thumbnail) {
+                      thumbnail.addEventListener('click', function (e) {
+                        // Set the lightbox data-image attribute when the thumbnail is clicked
+                        <strong>lightbox.dataset.image = e.target.dataset.image;</strong>
+                      });
+                    });
+                  })();
+                &lt;/script&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Finally, we'll add another <code>click</code> event listener to the lightbox to set its <code>data-image</code> attribute to empty when the lightbox is clicked.</p>
+        <pre data-line="47-49">
+          <code class="language-markup">
+            &lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;title&gt;Lightbox Effect&lt;/title&gt;
+                &lt;style&gt;
+                  .thumbnail {
+                    width: 10rem;
+                    margin: 1rem;
+                  }
+                  .lightbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                  }
+                  .lightbox[data-image=''] {
+                    display: none;
+                  }
+                  .lightbox[data-image='dog'] {
+                    background-image: url('dog.jpg');
+                  }
+                  .lightbox[data-image='cat'] {
+                    background-image: url('cat.jpg');
+                  }
+                &lt;/style&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;h1&gt;Lightbox Effect&lt;h1&gt;
+                &lt;img class="thumbnail" src="dog.jpg" data-image="dog"&gt;
+                &lt;img class="thumbnail" src="cat.jpg" data-image="cat"&gt;
+                &lt;div id="lightbox" class="lightbox" data-image=""&gt;&lt;/div&gt;
+                &lt;script&gt;
+                  (function () {
+                    // Lightbox Code
+                    var lightbox = document.getElementById('lightbox');
+                    document.querySelectorAll('.thumbnail').forEach(function (thumbnail) {
+                      thumbnail.addEventListener('click', function () {
+                        // Set the lightbox data-image attribute when the thumbnail is clicked
+                        lightbox.dataset.image = thumbnail.dataset.image;
+                      });
+                    });
+                    <strong>lightbox.addEventListener('click', function () {
+                      lightbox.dataset.image = '';
+                    });</strong>
+                  })();
+                &lt;/script&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </code>
+        </pre>
+      </li>
+    </ol>
+  </body>
+</html>

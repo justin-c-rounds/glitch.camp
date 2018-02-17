@@ -26,4 +26,7 @@ pre code {
 
 img {
   border: 0.1em solid black;
+  width: 640px;
+  max-width: 100%;
+  display: block;
 }

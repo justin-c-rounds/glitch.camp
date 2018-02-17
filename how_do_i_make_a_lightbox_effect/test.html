@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lightbox Effect</title>
+    <style>
+      .thumbnail {
+        width: 10rem;
+        margin: 1rem;
+      }
+      .lightbox {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+      }
+      .lightbox[data-image=''] {
+        display: none;
+      }
+      .lightbox[data-image='dog'] {
+        background-image: url('dog.jpg');
+      }
+      .lightbox[data-image='cat'] {
+        background-image: url('cat.jpg');
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lightbox Effect<h1>
+    <img class="thumbnail" src="dog.jpg" data-image="dog">
+    <img class="thumbnail" src="cat.jpg" data-image="cat">
+    <div id="lightbox" class="lightbox" data-image=""></div>
+    <script>
+      (function () {
+        // Lightbox Code
+        var lightbox = document.getElementById('lightbox');
+        document.querySelectorAll('.thumbnail').forEach(function (thumbnail) {
+          thumbnail.addEventListener('click', function () {
+            // Set the lightbox data-image attribute when the thumbnail is clicked
+            lightbox.dataset.image = thumbnail.dataset.image;
+          });
+        });
+        lightbox.addEventListener('click', function () {
+          lightbox.dataset.image = '';
+        });
+      })();
+    </script>
+  </body>
+</html>
